@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos Universitarios</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #7209b7;
+            --success: #06d6a0;
+            --dark: #1e1e2c;
+            --light: #f8f9fa;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background-color: #fafbff;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            position: relative;
+            margin: 0 10px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .hero-section {
+            background: var(--gradient);
+            color: white;
+            padding: 120px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            top: -150px;
+            right: -150px;
+        }
+        
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            bottom: -100px;
+            left: -100px;
+        }
+        
+        .display-4 {
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .btn-modern {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-modern:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            background: white;
+            color: var(--primary);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            bottom: -15px;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .section-title.text-center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            height: 100%;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-card .card-body {
+            padding: 25px;
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .carousel-control-prev, .carousel-control-next {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.8;
+        }
+        
+        .carousel-control-prev {
+            left: 15px;
+        }
+        
+        .carousel-control-next {
+            right: 15px;
+        }
+        
+        .course-detail {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            border: none;
+        }
+        
+        .course-header {
+            background: var(--gradient);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px 12px 0 0;
+            margin: -30px -30px 30px;
+        }
+        
+        .list-group-item {
+            border: none;
+            border-left: 3px solid transparent;
+            padding: 12px 20px;
+        }
+        
+        .list-group-item:hover {
+            border-left: 3px solid var(--primary);
+            background: #f8f9ff;
+        }
+        
+        .accordion-button {
+            font-weight: 600;
+            padding: 15px 20px;
+            border: none;
+            background: #f8f9ff;
+            border-radius: 8px !important;
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background: var(--gradient);
+            color: white;
+            box-shadow: none;
+        }
+        
+        .accordion-body {
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .table-modern {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .table-modern thead th {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 15px;
+        }
+        
+        .table-modern tbody td {
+            padding: 15px;
+            border-color: #f1f2f6;
+        }
+        
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .footer h5::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient);
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+        
+        .footer .list-unstyled li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer .bi {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 100px 0 80px;
+            }
+            
+            .display-4 {
+                font-size: 2.5rem;
+            }
+            
+            .course-card {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-laptop me-2"></i> Cursos Universitarios
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#cursos">Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#acerca">Acerca de</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contacto">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section / Página de Inicio -->
+    <section id="inicio" class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold animate-fadeIn">Cursos Universitarios</h1>
+            <p class="lead fs-4 animate-fadeIn" style="animation-delay: 0.2s;">Explora información detallada sobre los cursos finalizados en la carrera de Ingeniería en Sistemas</p>
+            <a href="#cursos" class="btn btn-modern mt-4 animate-fadeIn" style="animation-delay: 0.4s;">
+                Explorar Cursos <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Resumen y Carrusel -->
+    <section class="container py-5 my-5">
+        <h2 class="section-title text-center">Cursos Destacados</h2>
+        <div id="courseCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10">
+                            <div class="course-card card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-code-slash card-icon"></i>
+                                    <h3 class="card-title">Programación I</h3>
+                                    <p class="card-text">Introducción a los conceptos fundamentales de programación utilizando Python. Aprende los fundamentos de la algorítmica y desarrolla tus primeros programas.</p>
+                                    <a href="#programacion1" class="btn btn-primary mt-3">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10">
+                            <div class="course-card card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-database card-icon"></i>
+                                    <h3 class="card-title">Bases de Datos</h3>
+                                    <p class="card-text">Diseño e implementación de bases de datos relacionales y SQL. Domina el diseño de esquemas normalizados y consultas avanzadas.</p>
+                                    <a href="#bases-datos" class="btn btn-primary mt-3">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10">
+                            <div class="course-card card">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-diagram-3 card-icon"></i>
+                                    <h3 class="card-title">Estructuras de Datos</h3>
+                                    <p class="card-text">Estudio de las principales estructuras de datos y su aplicación. Implementa y utiliza las estructuras adecuadas para cada problema.</p>
+                                    <a href="#estructuras-datos" class="btn btn-primary mt-3">Ver detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#courseCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#courseCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Listado de Cursos -->
+    <section class="container py-5 my-5">
+        <h2 class="section-title text-center">Todos los Cursos</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="course-card card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-code-slash card-icon"></i>
+                        <h5 class="card-title">Programación I</h5>
+                        <p class="card-text">Introducción a la programación con Python, conceptos básicos y algoritmos fundamentales.</p>
+                        <a href="#programacion1" class="btn btn-sm btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="course-card card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-database card-icon"></i>
+                        <h5 class="card-title">Bases de Datos</h5>
+                        <p class="card-text">Diseño e implementación de bases de datos relacionales con MySQL y PostgreSQL.</p>
+                        <a href="#bases-datos" class="btn btn-sm btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="course-card card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-diagram-3 card-icon"></i>
+                        <h5 class="card-title">Estructuras de Datos</h5>
+                        <p class="card-text">Arrays, listas enlazadas, pilas, colas, árboles, grafos y algoritmos de ordenamiento.</p>
+                        <a href="#estructuras-datos" class="btn btn-sm btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="course-card card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-globe card-icon"></i>
+                        <h5 class="card-title">Programación Web</h5>
+                        <p class="card-text">HTML5, CSS3, JavaScript y fundamentos de desarrollo web front-end y back-end.</p>
+                        <a href="#programacion-web" class="btn btn-sm btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="course-card card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-clipboard-data card-icon"></i>
+                        <h5 class="card-title">Ingeniería de Software</h5>
+                        <p class="card-text">Metodologías ágiles, ciclo de vida del software y garantía de calidad en el desarrollo.</p>
+                        <a href="#ingenieria-software" class="btn btn-sm btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="course-card card h-100">
+                    <div class="card-body">
+                        <i class="bi bi-shield-lock card-icon"></i>
+                        <h5 class="card-title">Seguridad Informática</h5>
+                        <p class="card-text">Principios de ciberseguridad, ethical hacking y protección de sistemas informáticos.</p>
+                        <a href="#seguridad" class="btn btn-sm btn-primary">Ver detalles</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página de Cursos -->
+    <section id="cursos" class="container py-5 my-5">
+        <h2 class="section-title text-center">Detalles de Cursos</h2>
+        
+        <!-- Curso 1 -->
+        <div id="programacion1" class="course-detail mb-5">
+            <div class="course-header">
+                <h3><i class="bi bi-code-slash me-2"></i> Programación I</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Puntos clave</h4>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Introducción a la programación con Python</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Variables, tipos de datos y operadores</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Estructuras de control (if, for, while)</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Funciones y modularización</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Introducción a POO</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Evaluación</h4>
+                    <table class="table table-modern">
+                        <thead>
+                            <tr>
+                                <th>Componente</th>
+                                <th>Porcentaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Exámenes teóricos</td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                                <td>Laboratorios</td>
+                                <td>30%</td>
+                            </tr>
+                            <tr>
+                                <td>Proyecto final</td>
+                                <td>30%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <h4 class="mt-4">Temas principales</h4>
+            <div class="accordion" id="accordionProgramacion1">
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                            <i class="bi bi-1-circle me-2"></i> Fundamentos de programación
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionProgramacion1">
+                        <div class="accordion-body">
+                            Introducción a los algoritmos, diagramas de flujo y pseudocódigo. Primeros programas en Python. Sintaxis básica, variables, tipos de datos y operadores. Entrada y salida de datos.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                            <i class="bi bi-2-circle me-2"></i> Estructuras de control
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionProgramacion1">
+                        <div class="accordion-body">
+                            Condicionales (if, else, elif), bucles (for, while) y control de flujo de programas. Estructuras anidadas y mejores prácticas en el control de flujo.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                            <i class="bi bi-3-circle me-2"></i> Programación orientada a objetos
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionProgramacion1">
+                        <div class="accordion-body">
+                            Clases, objetos, herencia, polimorfismo y encapsulamiento en Python. Diseño de programas utilizando el paradigma de orientación a objetos.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Curso 2 -->
+        <div id="bases-datos" class="course-detail mb-5">
+            <div class="course-header bg-success">
+                <h3><i class="bi bi-database me-2"></i> Bases de Datos</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Puntos clave</h4>
+                    <ul class="list-group mb-4">
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Modelo entidad-relación</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Normalización de bases de datos</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Lenguaje SQL (DDL, DML)</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Transacciones y control de concurrencia</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i> Administración básica de BD</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Evaluación</h4>
+                    <table class="table table-modern">
+                        <thead>
+                            <tr>
+                                <th>Componente</th>
+                                <th>Porcentaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Exámenes teóricos</td>
+                                <td>35%</td>
+                            </tr>
+                            <tr>
+                                <td>Laboratorios prácticos</td>
+                                <td>35%</td>
+                            </tr>
+                            <tr>
+                                <td>Proyecto de base de datos</td>
+                                <td>30%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <h4 class="mt-4">Temas principales</h4>
+            <div class="accordion" id="accordionBasesDatos">
+                <div class="accordion-item mb-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                            <i class="bi bi-1-circle me-2"></i> Modelado de datos
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse show" data-bs-parent="#accordionBasesDatos">
+                        <div class="accordion-body">
+                            Modelo entidad-relación, diagramas ER, y diseño conceptual de bases de datos. Identificación de entidades, atributos y relaciones. Cardinalidad y participación.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">
+                            <i class="bi bi-2-circle me-2"></i> SQL y MySQL
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionBasesDatos">
+                        <div class="accordion-body">
+                            Creación de bases de datos, tablas, consultas SELECT, INSERT, UPDATE, DELETE, y consultas avanzadas con JOIN. Subconsultas, funciones agregadas y procedimientos almacenados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Autor</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-person-circle"></i> Pablo Daniel Tzul - Carnet: 9490-21-5193</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Información de la carrera</h5>
+                    <p><i class="bi bi-book me-2"></i> Ingeniería en Sistemas de información y ciencias de la computación</p>
+                    <p><i class="bi bi-building me-2"></i> Universidad Mariano Galvez</p>
+                    <p><i class="bi bi-geo-alt me-2"></i> Guatemala, Guatemala</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contacto</h5>
+                    <p><i class="bi bi-envelope me-2"></i> ptzulr@miumg.edu.gt</p>
+                    <p><i class="bi bi-telephone me-2"></i> 502 55831667</p>
+                    <div class="d-flex mt-3">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram fs-5"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1)">
+            <div class="text-center">
+                <p>© 2025 Universidad Mariano Galvez - Todos los derechos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#" class="back-to-top">
+        <i class="bi bi-arrow-up"></i>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Back to top button
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('show');
+            } else {
+                backToTopButton.classList.remove('show');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+                document.querySelector('.navbar').style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                document.querySelector('.navbar').style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.05)';
+                document.querySelector('.navbar').style.background = 'rgba(255, 255, 255, 0.9)';
+            }
+        });
+    </script>
+</body>
+</html>
